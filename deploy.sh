@@ -1,58 +1,66 @@
 #!/bin/bash
-set -e  # Exit on any error
+set -e
 
-# Colors for output
+# Colors
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
 RED='\033[0;31m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-echo -e "${BLUE}🚀 Starting deployment process...${NC}\n"
+echo -e "${BLUE}🚀 Starting deployment...${NC}\n"
 
-# Check if we're on a clean working tree
-if [[ -n $(git status -s) ]]; then
-    echo -e "${RED}❌ Working directory not clean. Please commit or stash changes first.${NC}"
-    exit 1
-fi
-
-# Get current branch
-CURRENT_BRANCH=$(git branch --show-current)
-echo -e "${BLUE}📍 Current branch: ${CURRENT_BRANCH}${NC}\n"
-
-# Step 1: Build Tailwind CSS
+# Step 1: Build
 echo -e "${BLUE}🎨 Building Tailwind CSS...${NC}"
 npm run css:build
-echo -e "${GREEN}✅ Tailwind CSS built${NC}\n"
 
-# Step 2: Build with Trunk
-echo -e "${BLUE}🦀 Building Rust/WASM with Trunk...${NC}"
+echo -e "${BLUE}🦀 Building with Trunk...${NC}"
 trunk build --release --public-url /
-echo -e "${GREEN}✅ Trunk build complete${NC}\n"
+echo -e "${GREEN}✅ Build complete${NC}\n"
 
-# Step 3: Commit source changes to main (if any)
-echo -e "${BLUE}💾 Committing source changes to main...${NC}"
+# Step 2: Save current branch
+CURRENT_BRANCH=$(git branch --show-current)
+
+# Step 3: Commit source to main
+echo -e "${BLUE}💾 Updating main branch...${NC}"
 git checkout main
-if [[ -n $(git status -s src/ Cargo.toml Cargo.lock package.json input.css tailwind.config.js) ]]; then
-    git add src/ Cargo.toml Cargo.lock package.json package-lock.json input.css tailwind.config.js index.html
-    git commit -m "Update source code - $(date '+%Y-%m-%d %H:%M:%S')" || echo "No source changes to commit"
-    git push origin main
-    echo -e "${GREEN}✅ Source code pushed to main${NC}\n"
+git add src/ Cargo.toml Cargo.lock package.json package-lock.json input.css tailwind.config.js index.html .github/ 2>/dev/null || true
+
+if git diff --staged --quiet; then
+    echo -e "${YELLOW}No source changes to commit${NC}"
 else
-    echo -e "${GREEN}✅ No source changes to commit${NC}\n"
+    git commit -m "Update source - $(date '+%Y-%m-%d %H:%M:%S')"
+    git push origin main
+    echo -e "${GREEN}✅ Pushed to main${NC}"
 fi
 
 # Step 4: Deploy to gh-branch
 echo -e "${BLUE}🌐 Deploying to gh-branch...${NC}"
-git subtree push --prefix dist origin gh-branch
+
+# Create temporary directory
+TMP_DIR=$(mktemp -d)
+cp -r dist/* "$TMP_DIR/"
+
+# Switch to gh-branch
+git checkout gh-branch || git checkout --orphan gh-branch
+
+# Remove everything except .git
+find . -maxdepth 1 ! -name '.git' ! -name '.' ! -name '..' -exec rm -rf {} +
+
+# Copy built files from temp
+cp -r "$TMP_DIR"/* .
+
+# Clean up temp
+rm -rf "$TMP_DIR"
+
+# Commit and push
+git add .
+git commit -m "Deploy - $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to deploy"
+git push origin gh-branch --force
+
 echo -e "${GREEN}✅ Deployed to gh-branch${NC}\n"
 
 # Step 5: Return to original branch
-if [[ "$CURRENT_BRANCH" != "main" ]]; then
-    echo -e "${BLUE}🔄 Returning to ${CURRENT_BRANCH}...${NC}"
-    git checkout "$CURRENT_BRANCH"
-fi
+git checkout "$CURRENT_BRANCH"
 
 echo -e "${GREEN}🎉 Deployment complete!${NC}"
-echo -e "${BLUE}📦 Main branch: Source code updated${NC}"
-echo -e "${BLUE}🌍 gh-branch: Built site deployed${NC}"
-echo -e "\n${BLUE}Your site should be live at: https://$(git config --get remote.origin.url | sed 's/.*github.com[:/]\(.*\)\.git/\1/' | cut -d'/' -f1).github.io/${NC}"
