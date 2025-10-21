@@ -1,0 +1,18 @@
+{
+  "name": "resume",
+  "version": "1.0.0",
+  "description": "This is a fairly minimal template for a Yew app that's built with [Trunk].",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "css:build": "tailwindcss -i ./input.css -o ./dist/output.css",
+    "css:watch": "tailwindcss -i ./input.css -o ./dist/output.css --watch",
+    "dev": "npm run css:watch & trunk serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.18"
+  }
+}
