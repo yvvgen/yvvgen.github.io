@@ -4,8 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume - Your Name</title>
-    <link data-trunk rel="css" href="dist/output.css" />
-  </head>
+    <link rel="stylesheet" href="/output-a683086799aea2d7.css" integrity="sha384-dtzsRLBFHUgRR+sXHTFCSyPUiA0gskSTdD5+eA/XpXr6btGV4ii+1DSx394r/Sgu"/>
+  <link rel="modulepreload" href="/resume-5f88d25b0e18492a.js" crossorigin="anonymous" integrity="sha384-wdVyEfFtkyI/f0tr6dAmYIWaLIArRIDz+21dsFvK5XX4/ElYtQmcMRfD3zhYLzmW"><link rel="preload" href="/resume-5f88d25b0e18492a_bg.wasm" crossorigin="anonymous" integrity="sha384-CebkOdmklEV2XyGI6fTGOBZNfw9poiJ2PEgQmSdLu6t7SceG2D2Zs/z22ZfdHayv" as="fetch" type="application/wasm"></head>
   <body>
-  </body>
+  
+<script type="module">
+import init, * as bindings from '/resume-5f88d25b0e18492a.js';
+const wasm = await init({ module_or_path: '/resume-5f88d25b0e18492a_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script></body>
 </html>
