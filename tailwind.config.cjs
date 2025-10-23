@@ -13,6 +13,7 @@ module.exports = {
         'fade-in': 'fadeIn 0.6s ease-in',
         'slide-up': 'slideUp 0.6s ease-out',
         'float': 'float 3s ease-in-out infinite',
+        'blink': 'blink 1s step-end infinite',
       },
       keyframes: {
         fadeIn: {
@@ -26,9 +27,27 @@ module.exports = {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-10px)' },
-        }
+        },
+        blink: {
+          '0%, 50%': { opacity: '1' },
+          '51%, 100%': { opacity: '0' },
+        },
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require("daisyui")
+  ],
+  daisyui: {
+    themes: [
+      "dark",           // DaisyUI's dark theme
+      "synthwave",      // Retro/terminal vibes
+      "cyberpunk",      // Neon terminal vibes
+      "night",          // Dark with blue accents
+      "coffee",         // Dark brown theme
+    ],
+    base: true,
+    styled: true,
+    utils: true,
+  },
 }
