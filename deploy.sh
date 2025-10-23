@@ -24,7 +24,7 @@ CURRENT_BRANCH=$(git branch --show-current)
 # Step 3: Commit source to main
 echo -e "${BLUE}💾 Updating main branch...${NC}"
 git checkout main
-git add src/ Cargo.toml Cargo.lock package.json package-lock.json input.css tailwind.config.js index.html .github/ 2>/dev/null || true
+git add src/ Cargo.toml Cargo.lock package.json package-lock.json input.css tailwind.config.mjs index.html .github/ 2>/dev/null || true
 
 if git diff --staged --quiet; then
     echo -e "${YELLOW}No source changes to commit${NC}"

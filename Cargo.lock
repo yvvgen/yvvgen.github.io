@@ -851,6 +851,7 @@ name = "resume"
 version = "0.1.0"
 dependencies = [
  "gloo-timers 0.3.0",
+ "theme",
  "tracing",
  "tracing-subscriber",
  "tracing-web",
@@ -983,6 +984,17 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
+]
+
+[[package]]
+name = "theme"
+version = "0.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d5379f4c4eb851af44d4d818ba43fac8cff83e9b8e624aedc8a3346ca45065fe"
+dependencies = [
+ "serde",
+ "web-sys",
+ "yew",
 ]
 
 [[package]]
