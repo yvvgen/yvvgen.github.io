@@ -2,48 +2,95 @@
 set -e
 
 # Catppuccin Mocha Colors (24-bit)
-GREEN='\033[38;2;171;233;179m'   # pastel green
-BLUE='\033[38;2;137;180;250m'    # pastel blue
-RED='\033[38;2;243;139;168m'     # pastel red
-YELLOW='\033[38;2;249;226;175m'  # pastel yellow
-NC='\033[0m'                      # reset
+GREEN='\033[38;2;171;233;179m'
+BLUE='\033[38;2;137;180;250m'
+RED='\033[38;2;243;139;168m'
+YELLOW='\033[38;2;249;226;175m'
+NC='\033[0m'
+
+REPO="git@github.com:yvvgen/yvvgen.github.io.git"
+GH_BRANCH="gh-branch"
 
 echo -e "${BLUE}🚀 Starting deployment...${NC}\n"
 
-# Save current branch
+# Ensure on dev branch
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-
-# Make sure we're on dev
 if [ "$CURRENT_BRANCH" != "dev" ]; then
-    echo -e "${RED}❌ Error: Not on dev branch. Currently on: $CURRENT_BRANCH${NC}"
-    echo -e "${BLUE}Switch to dev with: git checkout dev${NC}"
+    echo -e "${RED}❌ Not on dev branch: $CURRENT_BRANCH${NC}"
+    echo -e "${BLUE}Switch with: git checkout dev${NC}"
     exit 1
 fi
 
-# Check for uncommitted changes
+# Commit uncommitted changes
 if ! git diff-index --quiet HEAD --; then
-    echo -e "${YELLOW}⚠️  You have uncommitted changes. Committing them first...${NC}"
+    echo -e "${YELLOW}⚠️  Uncommitted changes detected. Committing...${NC}"
     git add .
     git commit -m "Update: $(date '+%Y-%m-%d %H:%M:%S')"
 fi
 
 # Push dev branch
-echo -e "${BLUE}⬆️  Pushing dev branch...${NC}"
+echo -e "${BLUE}⬆️  Pushing dev...${NC}"
 git push origin dev
-echo -e "${GREEN}✅ Pushed to dev${NC}\n"
+echo -e "${GREEN}✅ Dev pushed${NC}\n"
 
-# Switch to main and pull latest
-echo -e "${BLUE}🔄 Switching to main...${NC}"
+# Pull latest main and rebase dev
 git checkout main
 git pull origin main
-echo -e "${GREEN}✅ Main is up to date${NC}\n"
+git checkout dev
+git rebase main
+git push origin dev --force
+echo -e "${GREEN}✅ Dev rebased onto main${NC}\n"
 
-# Rebase dev onto main
-echo -e "${BLUE}🔀 Rebasing dev onto main...${NC}"
-git rebase dev
+# Build the project
+echo -e "${BLUE}🦀 Building with Trunk...${NC}"
+trunk build --release --public-url /
 
-# Push main
-echo -e "${BLUE}⬆️  Pushing main...${NC}"
-git push origin main
-echo -e "${GREEN}✅ Pushed to main${NC}\n"
+# Check build output
+if [ ! -d "dist" ] || [ -z "$(ls -A dist)" ]; then
+    echo -e "${RED}❌ dist folder is empty or missing${NC}"
+    exit 1
+fi
+
+if [ ! -f "dist/index.html" ]; then
+    echo -e "${RED}❌ No index.html in dist/${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}✅ Build complete${NC}\n"
+
+# Deploy from temporary folder
+TMP_DIR=$(mktemp -d)
+echo -e "${BLUE}📦 Preparing temporary deployment folder...${NC}"
+
+# Clone gh-branch only into temp folder
+git clone --branch $GH_BRANCH --single-branch $REPO "$TMP_DIR" || {
+    echo -e "${YELLOW}⚠️  gh-branch does not exist yet, creating new branch...${NC}"
+    git clone $REPO "$TMP_DIR"
+    cd "$TMP_DIR"
+    git checkout --orphan $GH_BRANCH
+    git rm -rf . >/dev/null 2>&1 || true
+    cd -
+}
+
+# Copy built files
+cp -r dist/* "$TMP_DIR/"
+
+# Commit and push
+cd "$TMP_DIR"
+git add .
+if git commit -m "Deploy $(date '+%Y-%m-%d %H:%M:%S')"; then
+    echo -e "${BLUE}⬆️  Pushing to $GH_BRANCH...${NC}"
+    git push origin $GH_BRANCH --force
+    echo -e "${GREEN}✅ Deployed to $GH_BRANCH${NC}\n"
+else
+    echo -e "${BLUE}No changes to deploy${NC}\n"
+fi
+
+# Return to original repo
+cd -
+echo -e "${BLUE}📍 Back to dev branch${NC}"
+git checkout dev
+
+echo -e "${GREEN}🎉 Deployment complete!${NC}"
+echo -e "${BLUE}📍 Site: https://yvvgen.github.io${NC}"
 
