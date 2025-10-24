@@ -4,7 +4,16 @@ pub struct Skill {
 }
 
 pub const SKILLS: &[Skill] = &[
-    Skill { name: "Rust", level: "Advanced" },
-    Skill { name: "TypeScript", level: "Advanced" },
-    Skill { name: "React", level: "Intermediate" },
+    Skill {
+        name: "Rust",
+        level: "Advanced",
+    },
+    Skill {
+        name: "TypeScript",
+        level: "Advanced",
+    },
+    Skill {
+        name: "React",
+        level: "Intermediate",
+    },
 ];

@@ -1,0 +1,9 @@
+[[hooks]]
+stage = "pre_build"
+command = "npx"
+command_arguments = [
+  "@tailwindcss/cli",
+  "-i", "./styles/input.css",
+  "-o", "./styles/output.css",
+  "--minify"
+]

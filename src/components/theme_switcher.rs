@@ -1,6 +1,5 @@
 use yew::prelude::*;
 use web_sys::{window, HtmlSelectElement};
-use wasm_bindgen::JsCast;
 
 #[function_component(ThemeSwitcher)]
 pub fn theme_switcher() -> Html {
@@ -17,7 +16,7 @@ pub fn theme_switcher() -> Html {
                         set_html_theme(&saved_theme);
                         current_theme.set(saved_theme);
                     } else {
-                        set_html_theme("terminal");
+                        set_html_theme("forest");
                     }
                 }
             }
@@ -25,7 +24,7 @@ pub fn theme_switcher() -> Html {
         }
     });
     
-    let on_change = {
+    let _on_change = {
         let current_theme = current_theme.clone();
         Callback::from(move |e: Event| {
             let target = e.target_dyn_into::<HtmlSelectElement>();
@@ -51,7 +50,7 @@ pub fn theme_switcher() -> Html {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                 </svg>
             </label>
-            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-lg bg-base-200 rounded-box w-52 mt-4">
+            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-lg bg-base-200 rounded-box w-160 mt-4 max-h-96 overflow-y-auto">
                 <li class="menu-title">
                     <span>{"Choose Theme"}</span>
                 </li>
@@ -100,15 +99,32 @@ fn set_html_theme(theme: &str) {
 
 fn themes() -> Vec<(&'static str, &'static str)> {
     vec![
-        ("terminal", "🖥️ Terminal"),
-        ("dark", "🌙 Dark"),
-        ("synthwave", "🌆 Synthwave"),
-        ("cyberpunk", "🌃 Cyberpunk"),
-        ("night", "🌌 Night"),
-        ("coffee", "☕ Coffee"),
-        ("dracula", "🧛 Dracula"),
-        ("business", "💼 Business"),
-        ("black", "⚫ Black"),
-        ("forest", "🌲 Forest"),
-    ]
+    ("dark","dark"),
+    ("cupcake","cupcake"),
+    ("bumblebee","bumblebee"),
+    ("emerald","emerald"),
+    ("corporate","corporate"),
+    ("synthwave","synthwave"),
+    ("retro","retro"),
+    ("cyberpunk","cyberpunk"),
+    ("valentine","valentine"),
+    ("halloween","halloween"),
+    ("garden","garden"),
+    ("forest","FOREST"),
+    ("aqua","aqua"),
+    ("lofi","lofi"),
+    ("pastel","pastel"),
+    ("fantasy","fantasy"),
+    ("wireframe","wireframe"),
+    ("black","black"),
+    ("luxury","luxury"),
+    ("dracula","dracula"),
+    ("cmyk","cmyk"),
+    ("autumn","autumn"),
+    ("business","business"),
+    ("acid","acid"),
+    ("lemonade","lemonade"),
+    ("night","night"),
+    ("coffee","coffee"),
+    ("winter", "winter")]
 }

@@ -4,63 +4,46 @@ set -e
 # Colors
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
 NC='\033[0m'
 
 echo -e "${BLUE}🚀 Starting deployment...${NC}\n"
 
-# Step 1: Build
-echo -e "${BLUE}🎨 Building Tailwind CSS...${NC}"
-npm run css:build
+# Save current branch
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
+# Build with Trunk (includes Tailwind)
 echo -e "${BLUE}🦀 Building with Trunk...${NC}"
 trunk build --release --public-url /
 echo -e "${GREEN}✅ Build complete${NC}\n"
 
-# Step 2: Save current branch
-CURRENT_BRANCH=$(git branch --show-current)
-
-# Step 3: Commit source to main
-echo -e "${BLUE}💾 Updating main branch...${NC}"
-git checkout main
-git add src/ Cargo.toml Cargo.lock package.json package-lock.json input.css tailwind.config.mjs index.html .github/ 2>/dev/null || true
-
-if git diff --staged --quiet; then
-    echo -e "${YELLOW}No source changes to commit${NC}"
-else
-    git commit -m "Update source - $(date '+%Y-%m-%d %H:%M:%S')"
-    git push origin main
-    echo -e "${GREEN}✅ Pushed to main${NC}"
-fi
-
-# Step 4: Deploy to gh-branch
-echo -e "${BLUE}🌐 Deploying to gh-branch...${NC}"
-
-# Create temporary directory
+# Create temporary directory for built files
 TMP_DIR=$(mktemp -d)
 cp -r dist/* "$TMP_DIR/"
 
-# Switch to gh-branch
-git checkout gh-branch || git checkout --orphan gh-branch
+# Switch to gh-branch (or create if it doesn’t exist)
+if git show-ref --quiet refs/heads/gh-branch; then
+    git checkout gh-branch
+else
+    git checkout --orphan gh-branch
+    git rm -rf . >/dev/null 2>&1 || true
+fi
 
 # Remove everything except .git
 find . -maxdepth 1 ! -name '.git' ! -name '.' ! -name '..' -exec rm -rf {} +
 
-# Copy built files from temp
+# Copy built files
 cp -r "$TMP_DIR"/* .
 
-# Clean up temp
+# Clean up
 rm -rf "$TMP_DIR"
 
-# Commit and push
+# Commit and push (force to overwrite old site)
 git add .
-git commit -m "Deploy - $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to deploy"
+git commit -m "Deploy $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to deploy"
 git push origin gh-branch --force
 
-echo -e "${GREEN}✅ Deployed to gh-branch${NC}\n"
-
-# Step 5: Return to original branch
+# Go back to original branch
 git checkout "$CURRENT_BRANCH"
 
-echo -e "${GREEN}🎉 Deployment complete!${NC}"
+echo -e "${GREEN}🎉 Deployment complete!${NC}\n"
+
