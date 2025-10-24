@@ -1,10 +1,10 @@
-use yew::prelude::*;
 use web_sys::{window, HtmlSelectElement};
+use yew::prelude::*;
 
 #[function_component(ThemeSwitcher)]
 pub fn theme_switcher() -> Html {
     let current_theme = use_state(|| "terminal".to_string());
-    
+
     // Initialize theme on mount
     use_effect_with((), {
         let current_theme = current_theme.clone();
@@ -16,14 +16,14 @@ pub fn theme_switcher() -> Html {
                         set_html_theme(&saved_theme);
                         current_theme.set(saved_theme);
                     } else {
-                        set_html_theme("forest");
+                        set_html_theme("synthwave-violet");
                     }
                 }
             }
             || ()
         }
     });
-    
+
     let _on_change = {
         let current_theme = current_theme.clone();
         Callback::from(move |e: Event| {
@@ -32,7 +32,7 @@ pub fn theme_switcher() -> Html {
                 let new_theme = select.value();
                 set_html_theme(&new_theme);
                 current_theme.set(new_theme.clone());
-                
+
                 // Save to localStorage
                 if let Some(window) = window() {
                     if let Ok(Some(storage)) = window.local_storage() {
@@ -42,7 +42,7 @@ pub fn theme_switcher() -> Html {
             }
         })
     };
-    
+
     html! {
         <div class="dropdown dropdown-end">
             <label tabindex="0" class="btn btn-ghost btn-circle">
@@ -62,7 +62,7 @@ pub fn theme_switcher() -> Html {
                         Callback::from(move |_: MouseEvent| {
                             set_html_theme(&theme_name);
                             current_theme.set(theme_name.clone());
-                            
+
                             if let Some(window) = window() {
                                 if let Ok(Some(storage)) = window.local_storage() {
                                     let _ = storage.set_item("theme", &theme_name);
@@ -70,10 +70,10 @@ pub fn theme_switcher() -> Html {
                             }
                         })
                     };
-                    
+
                     html! {
                         <li>
-                            <a 
+                            <a
                                 onclick={on_click}
                                 class={classes!(is_active.then(|| "active"))}
                             >
@@ -99,32 +99,34 @@ fn set_html_theme(theme: &str) {
 
 fn themes() -> Vec<(&'static str, &'static str)> {
     vec![
-    ("dark","dark"),
-    ("cupcake","cupcake"),
-    ("bumblebee","bumblebee"),
-    ("emerald","emerald"),
-    ("corporate","corporate"),
-    ("synthwave","synthwave"),
-    ("retro","retro"),
-    ("cyberpunk","cyberpunk"),
-    ("valentine","valentine"),
-    ("halloween","halloween"),
-    ("garden","garden"),
-    ("forest","FOREST"),
-    ("aqua","aqua"),
-    ("lofi","lofi"),
-    ("pastel","pastel"),
-    ("fantasy","fantasy"),
-    ("wireframe","wireframe"),
-    ("black","black"),
-    ("luxury","luxury"),
-    ("dracula","dracula"),
-    ("cmyk","cmyk"),
-    ("autumn","autumn"),
-    ("business","business"),
-    ("acid","acid"),
-    ("lemonade","lemonade"),
-    ("night","night"),
-    ("coffee","coffee"),
-    ("winter", "winter")]
+        ("dark", "dark"),
+        ("cupcake", "cupcake"),
+        ("bumblebee", "bumblebee"),
+        ("emerald", "emerald"),
+        ("corporate", "corporate"),
+        ("synthwave-violet", "synthwave-violet"),
+        ("synthwave", "synthwave"),
+        ("retro", "retro"),
+        ("cyberpunk", "cyberpunk"),
+        ("valentine", "valentine"),
+        ("halloween", "halloween"),
+        ("garden", "garden"),
+        ("forest", "FOREST"),
+        ("aqua", "aqua"),
+        ("lofi", "lofi"),
+        ("pastel", "pastel"),
+        ("fantasy", "fantasy"),
+        ("wireframe", "wireframe"),
+        ("black", "black"),
+        ("luxury", "luxury"),
+        ("dracula", "dracula"),
+        ("cmyk", "cmyk"),
+        ("autumn", "autumn"),
+        ("business", "business"),
+        ("acid", "acid"),
+        ("lemonade", "lemonade"),
+        ("night", "night"),
+        ("coffee", "coffee"),
+        ("winter", "winter"),
+    ]
 }

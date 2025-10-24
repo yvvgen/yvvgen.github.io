@@ -15,4 +15,5 @@ pub use font_switcher::FontSelector;
 pub use hero::Hero;
 pub use projects::Projects;
 pub use skills::Skills;
+pub use terminal::Terminal;
 pub use theme_switcher::ThemeSwitcher;

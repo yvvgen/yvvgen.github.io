@@ -6,3 +6,37 @@
     fantasy, wireframe, black, luxury, dracula, cmyk, autumn, business, acid,
     lemonade, night, coffee, winter];
 }
+@plugin "daisyui/theme" {
+  name: "synthwave-violet";
+  default: false;
+  prefersdark: false;
+  color-scheme: "dark";
+  --color-base-100: hsl(263.7 43.6% 7.6%);
+  --color-base-200: oklch(0.067 0.13 307);
+  --color-base-300: oklch(0.526 0.138 299.9);
+  --color-base-content: oklch(0.988 0.043 309.8);
+  --color-primary: hsl(248 81.1% 78.4%);
+  --color-primary-content: hsl(249.5 44.2% 8.4%);
+  --color-secondary: oklch(0.869 0.023 98.5);
+  --color-secondary-content: hsl(180 0% 0%);
+  --color-accent: oklch(0.831 0.237 336.2);
+  --color-accent-content: oklch(0 0.068 0);
+  --color-neutral: oklch(0.072 0.256 299.9);
+  --color-neutral-content: oklch(0.87 0 288.6);
+  --color-info: oklch(0.8 0.182 311.2);
+  --color-info-content: rgb(0 0 0);
+  --color-success: hsl(157.6 100% 47.9%);
+  --color-success-content: oklch(27% 0.046 192.524);
+  --color-warning: hsl(30.7 100% 57.8%);
+  --color-warning-content: oklch(0.112 0.109 57.7);
+  --color-error: oklch(0.636 0.238 28.4);
+  --color-error-content: hsl(240 0% 0%);
+  --radius-selector: 2rem;
+  --radius-field: 1rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.21875rem;
+  --size-field: 0.21875rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
