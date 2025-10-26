@@ -130,12 +130,8 @@ pub fn font_selector() -> Html {
 
     html! {
         <div class="dropdown dropdown-bottom">
-            <label tabindex="0" class="btn btn-ghost btn-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-5 h-5 stroke-current">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
-            </label>
-            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-lg bg-base-200 rounded-box w-160 mt-4 max-h-96 overflow-y-auto">
+            <label tabindex="0" class="btn btn-ghost">{"Font"}</label>
+            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-lg bg-base-200 rounded-box w-80 mt-4 max-h-96 overflow-y-auto">
                 <li class="menu-title">
                     <span>{"Choose Font"}</span>
                 </li>
