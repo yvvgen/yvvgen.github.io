@@ -19,7 +19,7 @@ pub fn terminal_emulator() -> Html {
 
     html! {
         <div
-            class="w-[60vh] h-[40vh] bg-base-100 rounded-2xl shadow-[0_0_50px_10px_hsla(248,81.1%,78.4%,0.7)] overflow-hidden flex flex-col relative"
+            class="w-2xl min-h-80 bg-base-100 rounded-2xl shadow-[0_0_50px_10px_hsla(248,81.1%,78.4%,0.7)] overflow-hidden flex flex-col relative"
         >
             // Main terminal screen
             <TerminalScreen state={state.clone()} />
