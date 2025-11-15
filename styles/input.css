@@ -41,3 +41,120 @@
   --depth: 1;
   --noise: 0;
 }
+
+/* Define custom keyframes at root level */
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Register custom animations with Tailwind v4 */
+@theme {
+  --animate-typewriter: typewriter 2s steps(40, end) forwards;
+  --animate-shake: shake 0.5s ease-in-out;
+  --animate-fade-in: fade-in 0.5s ease-in-out;
+}
+
+@layer components {
+  /*--------------------------------------------------------------------------*/
+  /* 1. BUTTONS                                                             */
+  /*--------------------------------------------------------------------------*/
+
+  /* A general-purpose button for positive or confirming actions (e.g., "Submit", "Save") */
+  .button-validation {
+    @apply btn btn-success text-success-content;
+    @apply hover:bg-success/80;
+    /* Using Tailwind's native pulse animation */
+    @apply focus:animate-pulse;
+  }
+
+  /* A button for progressing to the next step in a sequence (e.g., "Next", "Continue") */
+  .button-next {
+    @apply btn btn-primary;
+    /* Animate an arrow or chevron inside the button on hover */
+    /* This requires adding a span/icon inside the button's HTML */
+    @apply hover:gap-4 transition-all duration-300;
+  }
+
+  /* A button for dangerous or destructive actions (e.g., "Delete", "Cancel") */
+  .button-danger {
+    @apply btn btn-error text-error-content;
+    /* Shake animation on hover to signal caution */
+    @apply hover:animate-shake;
+  }
+
+  /*--------------------------------------------------------------------------*/
+  /* 2. CARDS                                                               */
+  /*--------------------------------------------------------------------------*/
+
+  /* An enhanced card for showcasing portfolio projects */
+  .card-project {
+    @apply card bg-base-200 shadow-lg transition-all duration-300;
+    @apply hover:shadow-2xl hover:-translate-y-1;
+    @apply dark:border dark:border-base-300;
+  }
+
+  .card-project .card-title {
+    @apply text-primary;
+  }
+
+  .card-project .project-links a {
+    @apply btn btn-ghost btn-sm;
+    @apply hover:bg-base-300;
+  }
+
+  /*--------------------------------------------------------------------------*/
+  /* 3. SCROLL & FADE ANIMATIONS                                            */
+  /*--------------------------------------------------------------------------*/
+
+  .scroll-fade-in {
+    opacity: 0;
+    transition: opacity 0.8s ease-out;
+  }
+
+  .scroll-slide-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+  }
+
+  .scroll-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,9 +1,9 @@
 mod app;
-mod commands;
 mod components;
 mod data;
-mod hooks;
-mod utils;
+mod terminal;
+mod views;
+mod windows;
 
 use app::App;
 use tracing_subscriber::{filter::Targets, prelude::*};

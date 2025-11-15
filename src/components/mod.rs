@@ -1,20 +1,7 @@
-mod about;
-mod contact;
-mod experience;
 mod font_switcher;
-mod hero;
-mod projects;
-mod skills;
-mod terminal;
-mod terminal_views;
 mod theme_switcher;
+mod modal_frame;
 
-pub use about::About;
-pub use contact::Contact;
-pub use experience::Experience;
 pub use font_switcher::FontSelector;
-pub use hero::Hero;
-pub use projects::Projects;
-pub use skills::Skills;
-pub use terminal_views::*;
 pub use theme_switcher::ThemeSwitcher;
+pub use modal_frame::ModalFrame;
