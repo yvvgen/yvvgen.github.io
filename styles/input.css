@@ -1,160 +1,352 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
-@plugin "daisyui" {
-  themes:
-    light, dark, cupcake, bumblebee, emerald, corporate, synthwave, retro,
-    cyberpunk, valentine, halloween, garden, forest, aqua, lofi, pastel,
-    fantasy, wireframe, black, luxury, dracula, cmyk, autumn, business, acid,
-    lemonade, night, coffee, winter];
-}
+@plugin "daisyui";
 @plugin "daisyui/theme" {
   name: "synthwave-violet";
-  default: false;
-  prefersdark: false;
+  default: true;
+  prefersdark: true;
   color-scheme: "dark";
-  --color-base-100: hsl(263.7 43.6% 7.6%);
-  --color-base-200: oklch(0.067 0.13 307);
-  --color-base-300: oklch(0.526 0.138 299.9);
-  --color-base-content: oklch(0.988 0.043 309.8);
-  --color-primary: hsl(248 81.1% 78.4%);
-  --color-primary-content: hsl(249.5 44.2% 8.4%);
-  --color-secondary: oklch(0.869 0.023 98.5);
-  --color-secondary-content: hsl(180 0% 0%);
-  --color-accent: oklch(0.831 0.237 336.2);
-  --color-accent-content: oklch(0 0.068 0);
-  --color-neutral: oklch(0.072 0.256 299.9);
-  --color-neutral-content: oklch(0.87 0 288.6);
-  --color-info: oklch(0.8 0.182 311.2);
-  --color-info-content: rgb(0 0 0);
-  --color-success: hsl(157.6 100% 47.9%);
-  --color-success-content: oklch(27% 0.046 192.524);
-  --color-warning: hsl(30.7 100% 57.8%);
-  --color-warning-content: oklch(0.112 0.109 57.7);
-  --color-error: oklch(0.636 0.238 28.4);
-  --color-error-content: hsl(240 0% 0%);
-  --radius-selector: 2rem;
-  --radius-field: 1rem;
-  --radius-box: 0.5rem;
-  --size-selector: 0.21875rem;
-  --size-field: 0.21875rem;
-  --border: 1px;
-  --depth: 1;
-  --noise: 0;
+
+  /* Deep base colors with rich purple undertones */
+  --color-base-100: oklch(0.15 0.08 285);
+  --color-base-200: oklch(0.18 0.07 285);
+  --color-base-300: oklch(0.22 0.06 285);
+  --color-base-content: oklch(0.92 0.02 285);
+
+  /* Vibrant electric purple primary */
+  --color-primary: oklch(0.7 0.28 295);
+  --color-primary-content: oklch(0.2 0.08 295);
+
+  /* Bright cyan secondary */
+  --color-secondary: oklch(0.75 0.2 195);
+  --color-secondary-content: oklch(0.18 0.06 195);
+
+  /* Neon hot pink accent */
+  --color-accent: oklch(0.72 0.26 345);
+  --color-accent-content: oklch(0.2 0.08 345);
+
+  /* Deeper neutral with purple tint */
+  --color-neutral: oklch(0.25 0.04 285);
+  --color-neutral-content: oklch(0.82 0.02 285);
+
+  /* Enhanced utility colors */
+  --color-info: oklch(0.74 0.18 210);
+  --color-info-content: oklch(0.18 0.06 210);
+  --color-success: oklch(0.68 0.22 155);
+  --color-success-content: oklch(0.18 0.06 155);
+  --color-warning: oklch(0.78 0.2 65);
+  --color-warning-content: oklch(0.18 0.06 65);
+  --color-error: oklch(0.7 0.24 15);
+  --color-error-content: oklch(0.18 0.06 15);
+
+  /* DaisyUI radius tokens */
+  --radius-selector: 1.5rem;
+  --radius-field: 0.75rem;
+  --radius-box: 0.75rem;
+  --radius-btn: 0.5rem;
+  --radius-badge: 0.5rem;
+
+  /* DaisyUI depth and effects */
+  --depth: 2;
+  --noise: 0.03;
 }
 
-/* Define custom keyframes at root level */
-@keyframes typewriter {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+@font-face {
+  font-family: "ANAKRON";
+  src: url("/fonts/ANAKRON.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  10%,
-  30%,
-  50%,
-  70%,
-  90% {
-    transform: translateX(-5px);
-  }
-  20%,
-  40%,
-  60%,
-  80% {
-    transform: translateX(5px);
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Register custom animations with Tailwind v4 */
 @theme {
-  --animate-typewriter: typewriter 2s steps(40, end) forwards;
-  --animate-shake: shake 0.5s ease-in-out;
-  --animate-fade-in: fade-in 0.5s ease-in-out;
+  /* Additional Tailwind v4 custom tokens */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-full: 9999px;
+
+  /* Shadow tokens for neon effects */
+  --shadow-glow-primary:
+    0 0 10px oklch(0.7 0.28 295 / 0.6), 0 0 20px oklch(0.7 0.28 295 / 0.4),
+    0 0 30px oklch(0.7 0.28 295 / 0.2);
+
+  --shadow-glow-secondary:
+    0 0 10px oklch(0.75 0.2 195 / 0.6), 0 0 20px oklch(0.75 0.2 195 / 0.4),
+    0 0 30px oklch(0.75 0.2 195 / 0.2);
+
+  --shadow-glow-accent:
+    0 0 10px oklch(0.72 0.26 345 / 0.6), 0 0 20px oklch(0.72 0.26 345 / 0.4),
+    0 0 30px oklch(0.72 0.26 345 / 0.2);
+
+  --shadow-glow-subtle:
+    0 0 5px oklch(0.7 0.28 295 / 0.3), 0 0 10px oklch(0.72 0.26 345 / 0.2);
+
+  --shadow-card:
+    0 4px 20px oklch(0.7 0.28 295 / 0.1),
+    inset 0 1px 0 oklch(0.7 0.28 295 / 0.1);
+
+  /* Gradient tokens */
+  --gradient-synthwave: linear-gradient(
+    135deg,
+    oklch(0.7 0.28 295 / 0.15) 0%,
+    oklch(0.72 0.26 345 / 0.15) 50%,
+    oklch(0.75 0.2 195 / 0.15) 100%
+  );
+
+  --gradient-synthwave-reverse: linear-gradient(
+    315deg,
+    oklch(0.75 0.2 195 / 0.15) 0%,
+    oklch(0.72 0.26 345 / 0.15) 50%,
+    oklch(0.7 0.28 295 / 0.15) 100%
+  );
+
+  --gradient-neon: linear-gradient(
+    90deg,
+    oklch(0.7 0.28 295) 0%,
+    oklch(0.72 0.26 345) 50%,
+    oklch(0.75 0.2 195) 100%
+  );
+
+  --gradient-chrome: linear-gradient(
+    180deg,
+    oklch(0.7 0.28 295 / 0.3) 0%,
+    transparent 50%,
+    oklch(0.75 0.2 195 / 0.2) 100%
+  );
+
+  /* Grid and effect tokens */
+  --grid-color: oklch(0.7 0.28 295 / 0.2);
+  --grid-size: 40px;
+  --scanline-opacity: 0.1;
+  --scanline-color: oklch(0.75 0.2 195);
+  
+  --font-sans: "ANAKRON", monospace; /* Main font */
+  --font-display: "ANAKRON", monospace; /* Optional: same as sans */
+  --font-mono: "Press Start 2P", monospace; /* Monospace text */
+  --font-terminal: "Press Start 2P", monospace; /* Terminal font */
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-base-100);
+    color: var(--color-base-content);
+  }
+
+  .font-display {
+    font-size: 1.5rem;
+  }
+}
+
+@layer utilities {
+  /* Neon glow utilities */
+  .glow-primary {
+    box-shadow: var(--shadow-glow-primary);
+  }
+
+  .glow-secondary {
+    box-shadow: var(--shadow-glow-secondary);
+  }
+
+  .glow-accent {
+    box-shadow: var(--shadow-glow-accent);
+  }
+
+  .glow-subtle {
+    box-shadow: var(--shadow-glow-subtle);
+  }
+
+  /* Neon text effects */
+  .text-neon-primary {
+    color: var(--color-primary);
+    text-shadow: var(--shadow-glow-primary);
+  }
+
+  .text-neon-secondary {
+    color: var(--color-secondary);
+    text-shadow: var(--shadow-glow-secondary);
+  }
+
+  .text-neon-accent {
+    color: var(--color-accent);
+    text-shadow: var(--shadow-glow-accent);
+  }
+
+  /* Gradient backgrounds */
+  .bg-gradient-synthwave {
+    background: var(--gradient-synthwave), var(--color-base-100);
+  }
+
+  .bg-gradient-synthwave-reverse {
+    background: var(--gradient-synthwave-reverse), var(--color-base-100);
+  }
+
+  .bg-gradient-neon {
+    background: var(--gradient-neon);
+  }
+
+  /* Retro grid background */
+  .bg-synthwave-grid {
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: var(--grid-size) var(--grid-size);
+    background-position: -1px -1px;
+  }
+
+  /* Neon border effect */
+  .border-neon {
+    border: 2px solid transparent;
+    background:
+      linear-gradient(var(--color-base-200), var(--color-base-200)) padding-box,
+      var(--gradient-neon) border-box;
+  }
+
+  /* Card effect */
+  .card-synthwave {
+    background: var(--gradient-synthwave), var(--color-base-200);
+    border: 1px solid oklch(0.7 0.28 295 / 0.2);
+    box-shadow: var(--shadow-card);
+    border-radius: var(--radius-lg);
+  }
+
+  /* Chrome reflection */
+  .chrome-effect {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chrome-effect::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-chrome);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* Scanlines overlay */
+  .scanlines {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scanlines::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      var(--scanline-color) 0px,
+      transparent 1px,
+      transparent 2px,
+      var(--scanline-color) 3px
+    );
+    background-size: 100% 3px;
+    opacity: var(--scanline-opacity);
+    pointer-events: none;
+    animation: scanline-move 8s linear infinite;
+  }
+
+  /* Pulse glow animation */
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
 }
 
 @layer components {
-  /*--------------------------------------------------------------------------*/
-  /* 1. BUTTONS                                                             */
-  /*--------------------------------------------------------------------------*/
-
-  /* A general-purpose button for positive or confirming actions (e.g., "Submit", "Save") */
-  .button-validation {
-    @apply btn btn-success text-success-content;
-    @apply hover:bg-success/80;
-    /* Using Tailwind's native pulse animation */
-    @apply focus:animate-pulse;
-  }
-
-  /* A button for progressing to the next step in a sequence (e.g., "Next", "Continue") */
-  .button-next {
-    @apply btn btn-primary;
-    /* Animate an arrow or chevron inside the button on hover */
-    /* This requires adding a span/icon inside the button's HTML */
-    @apply hover:gap-4 transition-all duration-300;
-  }
-
-  /* A button for dangerous or destructive actions (e.g., "Delete", "Cancel") */
-  .button-danger {
-    @apply btn btn-error text-error-content;
-    /* Shake animation on hover to signal caution */
-    @apply hover:animate-shake;
-  }
-
-  /*--------------------------------------------------------------------------*/
-  /* 2. CARDS                                                               */
-  /*--------------------------------------------------------------------------*/
-
-  /* An enhanced card for showcasing portfolio projects */
-  .card-project {
-    @apply card bg-base-200 shadow-lg transition-all duration-300;
-    @apply hover:shadow-2xl hover:-translate-y-1;
-    @apply dark:border dark:border-base-300;
-  }
-
-  .card-project .card-title {
-    @apply text-primary;
-  }
-
-  .card-project .project-links a {
-    @apply btn btn-ghost btn-sm;
-    @apply hover:bg-base-300;
-  }
-
-  /*--------------------------------------------------------------------------*/
-  /* 3. SCROLL & FADE ANIMATIONS                                            */
-  /*--------------------------------------------------------------------------*/
-
-  .scroll-fade-in {
-    opacity: 0;
-    transition: opacity 0.8s ease-out;
-  }
-
-  .scroll-slide-up {
-    opacity: 0;
-    transform: translateY(20px);
+  /* DaisyUI button enhancements with hover effects */
+  .btn-primary {
     transition:
-      opacity 0.6s ease-out,
-      transform 0.6s ease-out;
+      box-shadow 0.3s ease,
+      transform 0.2s ease;
   }
 
-  .scroll-visible {
-    opacity: 1;
-    transform: translateY(0);
+  .btn-primary:hover {
+    box-shadow: var(--shadow-glow-primary);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    transition:
+      box-shadow 0.3s ease,
+      transform 0.2s ease;
+  }
+
+  .btn-secondary:hover {
+    box-shadow: var(--shadow-glow-secondary);
+    transform: translateY(-2px);
+  }
+
+  .btn-accent {
+    transition:
+      box-shadow 0.3s ease,
+      transform 0.2s ease;
+  }
+
+  .btn-accent:hover {
+    box-shadow: var(--shadow-glow-accent);
+    transform: translateY(-2px);
+  }
+
+  /* Enhanced DaisyUI cards */
+  .card {
+    background: var(--gradient-synthwave), var(--color-base-200);
+    border: 1px solid oklch(0.7 0.28 295 / 0.2);
+    box-shadow: var(--shadow-card);
+  }
+
+  .modal-box {
+    background: var(--gradient-synthwave), var(--color-base-200);
+    border: 1px solid oklch(0.7 0.28 295 / 0.2);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* DaisyUI input enhancements */
+  .input:focus,
+  .textarea:focus,
+  .select:focus {
+    box-shadow: var(--shadow-glow-subtle);
+  }
+
+  /* DaisyUI link enhancements */
+  .link-primary:hover {
+    text-shadow: var(--shadow-glow-primary);
+  }
+
+  .link-secondary:hover {
+    text-shadow: var(--shadow-glow-secondary);
+  }
+
+  .link-accent:hover {
+    text-shadow: var(--shadow-glow-accent);
+  }
+}
+
+@keyframes scanline-move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 40px;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: var(--shadow-glow-subtle);
+  }
+  50% {
+    box-shadow: var(--shadow-glow-primary);
   }
 }

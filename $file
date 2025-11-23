@@ -1,0 +1,12 @@
+use yew::{function_component, html, Html};
+
+// A simple, runnable stub for the $name component
+#[function_component($name)]
+pub fn $tag() -> Html {
+    html! {
+        <section id="$tag" class="py-16">
+            <h2 class="text-3xl font-bold text-center mb-8">{\"$name Component: Hello!\"}</h2>
+            // Add your specific UI/logic here.
+        </section>
+    }
+}
