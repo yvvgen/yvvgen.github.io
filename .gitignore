@@ -24,3 +24,5 @@ dist/
 GEMINI.md
 TODO.md
 styles/output.css
+*.pdf
+css_showcase.html

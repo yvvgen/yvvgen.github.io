@@ -12,27 +12,30 @@ pub fn hero(props: &HeroProps) -> Html {
     html! {
         <div
             id="hero"
-            class="hero scanlines font-terminal min-h-[70vh] bg-gradient-synthwave-reverse text-primary-content shadow-2xl rounded-lg border-4 border-accent"
+            class="scanlines mt-8 font-terminal min-h-[70vh] bg-gradient-synthwave-reverse text-primary-content shadow-2xl rounded-lg border-4 border-accent accent-glow"
         >
-            <div class="hero-content text-center py-20">
-                <div class="max-w-3xl">
-                    <h1 class="text-6xl font-terminal font-extrabold mb-4 text-neon-accent">
-                        { &props.title }
-                    </h1>
-                    <p class="text-xl opacity-90 mb-8">
-                        { if props.subtitle.is_empty() {
-                                "A Rust and Yew Developer."
-                            } else {
-                                &props.subtitle
-                            } }
-                    </p>
-                    <a
-                        href="#projects"
-                        class="btn btn-lg btn-accent shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105 hover:glow-accent"
-                    >
-                        { "Explore My Work" }
-                    </a>
-                </div>
+            <div class="flex items-center text-accent mb-4 mt-4 ml-8 mr-8">
+                <span class="mr-2 text-warning">{ "$" }</span>
+                <h1 class="font-extrabold text-neon-accent leading-none">{ &props.title }</h1>
+            </div>
+            <div class="flex items-center text-3xl opacity-90 mb-8">
+                <span class="mr-2 text-success" />
+                <p>
+                    { if props.subtitle.is_empty() {
+                                    "Break all the machines"
+                                } else {
+                                    &props.subtitle
+                                } }
+                </p>
+            </div>
+            <div class="flex items-center">
+                <span class="mr-2 text-info" />
+                <a
+                    href="#projects"
+                    class="btn btn-lg btn-accent shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105 hover:glow-accent"
+                >
+                    { "Explore My Work" }
+                </a>
             </div>
         </div>
     }

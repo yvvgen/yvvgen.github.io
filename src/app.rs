@@ -1,7 +1,7 @@
 use yew::{function_component, html, Html};
 
 // Import all components from the components module
-use crate::components::{About, Contact, Hero, Navigation, Projects, Skills};
+use crate::components::{Contact, Experience, Hero, Navigation, Projects, Skills};
 // Import data constant
 use crate::data::profile::PROFILE;
 
@@ -12,8 +12,8 @@ pub fn app() -> Html {
             <Navigation />
             <main class="container mx-auto px-4">
                 // The Hero component now receives a 'title' prop.
-                <Hero title="Welcome to my Yew Portfolio!" />
-                <About />
+                <Hero title="Yvvgen" />
+                <Experience />
                 <Projects />
                 <Skills />
                 <Contact />

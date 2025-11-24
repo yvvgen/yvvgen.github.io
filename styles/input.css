@@ -125,7 +125,7 @@
   --grid-size: 40px;
   --scanline-opacity: 0.1;
   --scanline-color: oklch(0.75 0.2 195);
-  
+
   --font-sans: "ANAKRON", monospace; /* Main font */
   --font-display: "ANAKRON", monospace; /* Optional: same as sans */
   --font-mono: "Press Start 2P", monospace; /* Monospace text */
@@ -140,10 +140,6 @@
   body {
     background-color: var(--color-base-100);
     color: var(--color-base-content);
-  }
-
-  .font-display {
-    font-size: 1.5rem;
   }
 }
 
