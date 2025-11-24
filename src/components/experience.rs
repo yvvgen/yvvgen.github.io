@@ -14,108 +14,115 @@ pub fn experience(props: &ExperienceProps) -> Html {
         .clone()
         .unwrap_or_else(|| ExperienceItem::get_all());
 
+    let total_count = experiences.len();
+
     html! {
-        <section id="experience" class="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-7xl mx-auto">
-                <h1 class="text-5xl font-bold text-center mb-16 text-neon-primary">
-                    { "Experience" }
-                </h1>
-                <div class="relative">
-                    // Central timeline line
-                    <div
-                        class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary via-accent to-secondary"
-                    />
-                    // Experience items
-                    <div class="space-y-24">
-                        { experiences.iter().enumerate().map(|(index, exp)| {
-                            render_experience_item(exp, index)
-                        }).collect::<Html>() }
-                    </div>
-                </div>
-            </div>
+        <section class="w-full py-10 px-4">
+            <h2 class="text-3xl font-bold text-center mb-10 text-neon-primary">
+                { "Experience Log" }
+            </h2>
+            <ul class="timeline timeline-vertical timeline-snap-icon max-md:timeline-compact">
+                { experiences.iter().enumerate().map(|(index, exp)| {
+                    render_experience_item(exp, index, total_count)
+                }).collect::<Html>() }
+            </ul>
         </section>
     }
 }
 
-fn render_experience_item(experience: &ExperienceItem, index: usize) -> Html {
-    let (container_class, card_class, timeline_dot_class) = match experience.position {
+fn render_experience_item(experience: &ExperienceItem, index: usize, total_count: usize) -> Html {
+    // 1. Determine Position based on the Enum
+    // timeline-start = Left side (on desktop)
+    // timeline-end   = Right side (on desktop)
+    let (content_class, date_class, content_align) = match experience.position {
         TimelinePosition::Left => (
-            "flex justify-start pr-8 md:pr-16",
-            "w-full md:w-5/12",
-            "absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-0",
+            "timeline-start", // Content on Left
+            "timeline-end",   // Date on Right
+            "md:text-end",    // Align text towards the center line
         ),
         TimelinePosition::Right => (
-            "flex justify-end pl-8 md:pl-16",
-            "w-full md:w-5/12 ml-auto",
-            "absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-0",
+            "timeline-end",   // Content on Right
+            "timeline-start", // Date on Left
+            "text-start",     // Align text standard
         ),
     };
 
-    // Alternate colors for dots
-    let dot_color = match index % 3 {
-        0 => "bg-secondary glow-secondary",
-        1 => "bg-primary glow-primary",
-        _ => "bg-accent glow-accent",
+    // 2. Cycle Neon Colors (Secondary -> Primary -> Accent)
+    let (text_color, bg_color, border_color) = match index % 3 {
+        0 => ("text-secondary", "bg-secondary", "border-secondary"),
+        1 => ("text-primary", "bg-primary", "border-primary"),
+        _ => ("text-accent", "bg-accent", "border-accent"),
     };
 
-    // Extract year from date range
-    let year = experience
-        .date_range
-        .split_whitespace()
-        .find(|word| word.len() == 4 && word.chars().all(|c| c.is_numeric()))
-        .unwrap_or("2024");
-
-    // Unique ID for collapse control
-    let collapse_id = format!("collapse-{}", index);
-
     html! {
-        <div class="relative">
-            // Timeline dot with year
-            <div class={classes!(timeline_dot_class)}>
-                <label
-                    for={collapse_id.clone()}
-                    class={classes!("flex", "items-center", "justify-center", "w-16", "h-16", "rounded-full", dot_color, "border-4", "border-base-100", "z-10", "cursor-pointer", "transition-all", "duration-300", "hover:scale-110")}
-                >
-                    <span class="text-xs font-bold font-mono">{ year }</span>
-                </label>
+        <li>
+            // --- TOP CONNECTOR (The Neon Tube) ---
+            if index > 0 {
+                <hr class={bg_color} />
+            }
+            // --- DATE DISPLAY ("Ghost" style) ---
+            // We place this opposite to the content
+            <div
+                class={classes!("timeline-box", "ghost", date_class)}
+            >
+                <span class={classes!("font-mono", "font-bold", "text-lg", "opacity-70")}>
+                    { &experience.date_range }
+                </span>
             </div>
-            // Experience card container
-            <div class={classes!(container_class)}>
-                <div class={classes!(card_class)}>
-                    <div
-                        class="collapse collapse-arrow card-synthwave transition-all duration-300 hover:glow-primary"
-                    >
-                        <input type="checkbox" id={collapse_id} class="peer" />
-                        <div class="collapse-title p-6 pb-2">
-                            // Header (always visible)
-                            <div class="flex justify-between items-start flex-wrap gap-2">
-                                <div class="flex-1">
-                                    <h2 class="text-xl font-bold text-primary mb-1">
-                                        { &experience.title }
-                                    </h2>
-                                    <p class="text-secondary font-semibold">
-                                        { &experience.company }
-                                    </p>
-                                </div>
-                                <span class="text-sm text-accent font-mono whitespace-nowrap">
-                                    { &experience.date_range }
-                                </span>
-                            </div>
+            // --- CENTER ICON ---
+            <div class="timeline-middle">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    class={classes!("w-5", "h-5", text_color)}
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                        clip-rule="evenodd"
+                    />
+                </svg>
+            </div>
+            // --- MAIN CONTENT CARD ---
+            <div
+                class={classes!(
+                "timeline-box",
+                "p-0", "w-full", "md:w-96", "overflow-hidden",
+                content_class,
+                content_align
+            )}
+            >
+                // We use collapse-arrow to allow expanding details
+                <div class="collapse collapse-arrow bg-transparent">
+                    <input type="checkbox" />
+                    // HEADER: Title & Company
+                    <div class="collapse-title font-medium p-4">
+                        <div
+                            class={classes!("text-xl", "font-display", "tracking-wide", text_color)}
+                        >
+                            { &experience.title }
                         </div>
-                        <div class="collapse-content px-6">
-                            // Responsibilities (expandable)
-                            <ul class="space-y-2 text-base-content mt-2">
-                                { experience.responsibilities.iter().map(|resp| html! {
-                                    <li class="flex items-start">
-                                        <span class="text-primary mr-2 mt-1">{"▸"}</span>
-                                        <span class="leading-relaxed">{resp}</span>
-                                    </li>
-                                }).collect::<Html>() }
-                            </ul>
-                        </div>
+                        <div class="text-sm opacity-80 font-mono mt-1">{ &experience.company }</div>
+                    </div>
+                    // BODY: Responsibilities (Holo-data look)
+                    <div class="collapse-content text-sm">
+                        <ul class="list-none space-y-2 pb-2">
+                            { experience.responsibilities.iter().map(|resp| html! {
+                                <li class="flex items-start gap-2">
+                                    // Bullet point matching the cycle color
+                                    <span class={classes!("mt-[2px]", text_color)}>{"▸"}</span>
+                                    <span class="opacity-90">{resp}</span>
+                                </li>
+                            }).collect::<Html>() }
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
+            // --- BOTTOM CONNECTOR ---
+            if index < total_count - 1 {
+                <hr class={bg_color} />
+            }
+        </li>
     }
 }

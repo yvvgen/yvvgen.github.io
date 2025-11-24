@@ -8,7 +8,7 @@ use crate::data::profile::PROFILE;
 #[function_component(App)]
 pub fn app() -> Html {
     html! {
-        <div class="bg-base-100">
+        <div class="bg-base-100 bg-synthwave-grid">
             <Navigation />
             <main class="container mx-auto px-4">
                 // The Hero component now receives a 'title' prop.
