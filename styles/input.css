@@ -416,6 +416,56 @@
   .timeline-middle:hover svg {
     transform: scale(1.2);
   }
+
+  .badge-soft-primary {
+    background-color: oklch(0.7 0.28 295 / 0.15); /* Primary with alpha */
+    color: var(--color-primary);
+    border: 1px solid oklch(0.7 0.28 295 / 0.3);
+    text-shadow: 0 0 10px oklch(0.7 0.28 295 / 0.4);
+  }
+
+  .badge-soft-secondary {
+    background-color: oklch(0.75 0.2 195 / 0.15); /* Secondary with alpha */
+    color: var(--color-secondary);
+    border: 1px solid oklch(0.75 0.2 195 / 0.3);
+    text-shadow: 0 0 10px oklch(0.75 0.2 195 / 0.4);
+  }
+
+  .badge-soft-accent {
+    background-color: oklch(0.72 0.26 345 / 0.15); /* Accent with alpha */
+    color: var(--color-accent);
+    border: 1px solid oklch(0.72 0.26 345 / 0.3);
+    text-shadow: 0 0 10px oklch(0.72 0.26 345 / 0.4);
+  }
+
+  .badge-synthwave {
+    font-family: var(--font-mono); /* Press Start 2P for retro feel */
+    font-size: 0.65rem;
+    height: 1.5rem;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+    transition: all 0.2s ease;
+  }
+
+  .badge-synthwave:hover {
+    transform: scale(1.1);
+    background-opacity: 0.3;
+    box-shadow: 0 0 15px currentColor;
+  }
+
+  /* --- NEW: ANAKRON ICONS --- */
+  /* Using the font as a glyph icon */
+  .icon-anakron {
+    font-family: "ANAKRON";
+    font-size: 1.5rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify_content: center;
+    width: 2rem;
+    height: 2rem;
+    /* Neon glow handled by text-shadow utilities */
+  }
 }
 
 @keyframes scanline-move {

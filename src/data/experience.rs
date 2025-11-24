@@ -6,6 +6,8 @@ pub struct ExperienceItem {
     pub company: String,
     pub date_range: String,
     pub responsibilities: Vec<String>,
+    // Added tags for the badges
+    pub tags: Vec<String>,
     pub position: TimelinePosition,
 }
 
@@ -23,9 +25,10 @@ impl ExperienceItem {
                 company: "Groupe AVT".to_string(),
                 date_range: "Janvier 2025 à maintenant".to_string(),
                 responsibilities: vec![
-                    "Développement back d’une application de mise en relation apprentis/CFA/entreprises : PHP/Symfony, MySQL, Docker, API Platform, node.js, npm ...".to_string(),
-                    "Conception d’une partie intelligence : système de recommandation d’offre d’emplois, génération automatique de CV/Lettre de motivation adaptées à l’offre et au candidat.".to_string(),
+                    "Développement back d’une application de mise en relation apprentis/CFA/entreprises.".to_string(),
+                    "Conception d’une partie intelligence : système de recommandation, génération automatique de CV.".to_string(),
                 ],
+                tags: vec!["PHP/Symfony".to_string(), "API Platform".to_string(), "Node.js".to_string(), "Docker".to_string(), "AI".to_string()],
                 position: TimelinePosition::Right,
             },
             ExperienceItem {
@@ -36,6 +39,7 @@ impl ExperienceItem {
                     "Apprentissage de techniques d'agroforesterie.".to_string(),
                     "Fabrication de fromage, etc.".to_string(),
                 ],
+                tags: vec!["Agroforesterie".to_string(), "Autonomie".to_string()],
                 position: TimelinePosition::Left,
             },
             ExperienceItem {
@@ -44,8 +48,9 @@ impl ExperienceItem {
                 date_range: "Avril à Septembre 2023".to_string(),
                 responsibilities: vec![
                     "Caractérisation des scènes de conduite à partir des données récupérées lors de trajets en voiture".to_string(),
-                    "Evaluation statistique de la performance du régulateur de vitesse adaptatif lors des scènes de conduite identifiées".to_string(),
+                    "Evaluation statistique de la performance du régulateur de vitesse adaptatif".to_string(),
                 ],
+                tags: vec!["Python".to_string(), "Statistics".to_string(), "ADAS".to_string()],
                 position: TimelinePosition::Right,
             },
             ExperienceItem {
@@ -55,6 +60,7 @@ impl ExperienceItem {
                 responsibilities: vec![
                     "Spécialisation en mathématiques appliquées et en traitement de signal.".to_string(),
                 ],
+                tags: vec!["Maths".to_string(), "Signal Processing".to_string()],
                 position: TimelinePosition::Left,
             },
             ExperienceItem {
@@ -62,13 +68,10 @@ impl ExperienceItem {
                 company: "SNCF Connect & Tech".to_string(),
                 date_range: "Avril à Août 2022".to_string(),
                 responsibilities: vec![
-                    "Migration et amélioration du modèle de recommandation de trajets :".to_string(),
-                    "Préparation et mise en place de la migration sur le monorepo : architecture du projet, infrastructure cloud appropriée".to_string(),
-                    "Documentation de l’état de l’art des systèmes de recommandation : Deep Cross Network, Factorisaion Machine".to_string(),
-                    "Calculs de statistiques à la demande de certains services SNCF : abandon d’option, taux de remplissage . . .".to_string(),
-                    "Participations ponctuelles aux autres projets : 1st class upsell, direction intelligente du parcours client . . .".to_string(),
-                    "Participation au Hackathon : proposition d’une alerte réservation".to_string(),
+                    "Migration et amélioration du modèle de recommandation de trajets".to_string(),
+                    "Documentation de l’état de l’art (Deep Cross Network)".to_string(),
                 ],
+                tags: vec!["Data Science".to_string(), "Cloud".to_string(), "Recommender Systems".to_string()],
                 position: TimelinePosition::Right,
             },
             ExperienceItem {
@@ -76,9 +79,9 @@ impl ExperienceItem {
                 company: "Adeo".to_string(),
                 date_range: "Mai à Août 2021".to_string(),
                 responsibilities: vec![
-                    "Développement et validation d’un POC de détection de fraude à la caisse : apprentissage supervisé (Gradient Boosting), paramétrage des seuils statistiques de détection".to_string(),
-                    "Participation à une formation agile : Scrum, Kanban".to_string(),
+                    "Développement et validation d’un POC de détection de fraude".to_string(),
                 ],
+                tags: vec!["Machine Learning".to_string(), "Gradient Boosting".to_string(), "Agile".to_string()],
                 position: TimelinePosition::Right,
             },
             ExperienceItem {
@@ -86,8 +89,9 @@ impl ExperienceItem {
                 company: "École Centrale de Nantes".to_string(),
                 date_range: "2019 - 2023".to_string(),
                 responsibilities: vec![
-                    "Spécialisation en mathématiques appliquées et en traitement de signal.".to_string(),
+                    "Spécialisation en mathématiques appliquées.".to_string(),
                 ],
+                tags: vec!["Engineering".to_string()],
                 position: TimelinePosition::Left,
             },
             ExperienceItem {
@@ -97,9 +101,9 @@ impl ExperienceItem {
                 responsibilities: vec![
                     "Option Informatique.".to_string(),
                 ],
+                tags: vec!["Maths".to_string(), "Physics".to_string(), "CS".to_string()],
                 position: TimelinePosition::Left,
             },
         ]
     }
 }
-
