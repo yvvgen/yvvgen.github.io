@@ -1,4 +1,5 @@
-use crate::data::experience::{ExperienceItem, TimelinePosition};
+use crate::data::experience_data::{ExperienceItem, TimelinePosition};
+use crate::data::skills_data::Skill;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
@@ -17,9 +18,9 @@ pub fn experience(props: &ExperienceProps) -> Html {
     let total_count = experiences.len();
 
     html! {
-        <div class="container mx-auto px-4 py-10">
+        <div id="experience" class="container mx-auto px-4 py-10">
             <h2 class="text-4xl font-display text-center mb-12 text-neon-primary animate-pulse">
-                { "Experience Log" }
+                { "Experience " }
             </h2>
             <ul class="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
                 { experiences.iter().enumerate().map(|(index, exp)| {
@@ -31,40 +32,17 @@ pub fn experience(props: &ExperienceProps) -> Html {
 }
 
 fn render_experience_item(experience: &ExperienceItem, index: usize, total_count: usize) -> Html {
-    // 1. Determine Position
+    // --- Determine Timeline Position ---
     let (content_class, date_class, content_align) = match experience.position {
-        TimelinePosition::Left => (
-            "timeline-start md:text-end",
-            "timeline-end",
-            "md:items-end", // Align flex items to end for badges
-        ),
+        TimelinePosition::Left => ("timeline-start md:text-end", "timeline-end", "md:items-end"),
         TimelinePosition::Right => ("timeline-end", "timeline-start", "items-start"),
     };
 
-    // 2. Cycle Neon Colors (Secondary -> Primary -> Accent)
-    // We get specific badge classes for the cycle
-    let (text_color, bg_color, border_color, badge_style, glyph_char) = match index % 3 {
-        0 => (
-            "text-secondary",
-            "bg-secondary",
-            "border-secondary",
-            "badge-soft-secondary",
-            "ɔ",
-        ),
-        1 => (
-            "text-primary",
-            "bg-primary",
-            "border-primary",
-            "badge-soft-primary",
-            "ɔ",
-        ),
-        _ => (
-            "text-accent",
-            "bg-accent",
-            "border-accent",
-            "badge-soft-accent",
-            "ɔ",
-        ),
+    // --- Cycle Neon Colors (for connectors and general styling) ---
+    let (text_color, bg_color) = match index % 3 {
+        0 => ("text-secondary", "bg-secondary"),
+        1 => ("text-primary", "bg-primary"),
+        _ => ("text-accent", "bg-accent"),
     };
 
     html! {
@@ -77,11 +55,11 @@ fn render_experience_item(experience: &ExperienceItem, index: usize, total_count
             <div
                 class={classes!(date_class, "mb-10")}
             >
-                <div class={classes!("timeline-box", "ghost", "scanlines", text_color)}>
+                <div class={classes!("timeline-box", "ghost", "scanlines", "text-xl", text_color)}>
                     { &experience.date_range }
                 </div>
             </div>
-            // --- CENTER ICON (ANAKRON GLYPH) ---
+            // --- CENTER ICON ---
             <div class="timeline-middle">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -101,25 +79,19 @@ fn render_experience_item(experience: &ExperienceItem, index: usize, total_count
                 class={classes!(content_class, "mb-10", "flex", "flex-col", "gap-2", "scanlines", content_align)}
             >
                 <div
-                    class={classes!("timeline-box", border_color, "p-6", "bg-opacity-20", "backdrop-blur-sm")}
+                    class={classes!("timeline-box", "p-6", "bg-opacity-20", "backdrop-blur-sm", "hover:border-neon", text_color)}
                 >
                     // HEADER
-                    <div class="font-bold text-lg font-display tracking-wide">
+                    <div class="font-bold text-2xl font-display tracking-wide">
                         { &experience.title }
                     </div>
-                    <div class={classes!("text-sm", "opacity-80", "font-mono", text_color)}>
+                    <div
+                        class={classes!("text-xs", "opacity-80", "font-mono", "text-bold", text_color, "mb-4")}
+                    >
                         { &experience.company }
                     </div>
-                    // --- NEW: SOFT BADGES ROW ---
-                    <div
-                        class={classes!("flex", "flex-wrap", "gap-2", "mt-3", "mb-2", if experience.position == TimelinePosition::Left { "md:justify-end" } else { "justify-start" })}
-                    >
-                        { experience.tags.iter().map(|tag| html! {
-                            <span class={classes!("badge", "badge-synthwave", badge_style)}>
-                                { tag }
-                            </span>
-                        }).collect::<Html>() }
-                    </div>
+                    // --- SKILLS BADGES ---
+                    { Skill::list_to_badges(&experience.skills) }
                     // BODY
                     <div
                         class="collapse collapse-arrow border border-base-300 bg-base-200/30 rounded-box mt-2"
@@ -134,7 +106,7 @@ fn render_experience_item(experience: &ExperienceItem, index: usize, total_count
                             <ul class="list-none space-y-2 mt-2 text-xs md:text-sm">
                                 { experience.responsibilities.iter().map(|resp| html! {
                                     <li class="flex items-start gap-2">
-                                        <span class={classes!("mt-1", text_color)}>{"▸"}</span>
+                                        <span class={classes!(text_color)}>{"▸"}</span>
                                         <span>{resp}</span>
                                     </li>
                                 }).collect::<Html>() }

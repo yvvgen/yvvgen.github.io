@@ -53,6 +53,93 @@
   --noise: 0.03;
 }
 
+/* Normal select (default cursor) */
+* {
+  cursor: url("/cursors/Hotline White Normal Select.cur"), auto;
+}
+
+/* Pointer / Link select */
+a,
+button,
+[role="button"],
+.cursor-pointer {
+  cursor: url("/cursors/Hotline White Link Select.cur"), pointer;
+}
+
+/* Help cursor (help icon) */
+.help,
+[aria-help] {
+  cursor: url("/cursors/Hotline White Help Select.cur"), help;
+}
+
+/* Busy cursor (spinning wheel equivalent) */
+.waiting,
+.busy {
+  cursor: url("/cursors/Hotline White Busy.cur"), wait;
+}
+
+/* Working in background (loading cursor but still active) */
+.working {
+  cursor: url("/cursors/Hotline White Working In Background.cur"), progress;
+}
+
+/* Unavailable / not-allowed */
+.unavailable,
+.disabled,
+[disabled] {
+  cursor: url("/cursors/Hotline White Unavailable.cur"), not-allowed;
+}
+
+/* Text select / I-beam */
+input[type="text"],
+textarea,
+.text-select {
+  cursor: url("/cursors/Hotline White Text Select.cur"), text;
+}
+
+/* Precision select (crosshair) */
+.precision,
+.crosshair {
+  cursor: url("/cursors/Hotline White Precision Select.cur"), crosshair;
+}
+
+/* Handwriting / pen input */
+.handwriting {
+  cursor: url("/cursors/Hotline White Handwriting.cur"), text;
+}
+
+/* Move cursor (dragging) */
+.move,
+.dragging {
+  cursor: url("/cursors/Hotline White Move.cur"), move;
+}
+
+/* Resize cursors */
+
+/* Horizontal (EW) */
+.resize-ew,
+.resize-x,
+.resize-horizontal {
+  cursor: url("/cursors/Hotline White Horizontal Resize.cur"), ew-resize;
+}
+
+/* Vertical (NS) */
+.resize-ns,
+.resize-y,
+.resize-vertical {
+  cursor: url("/cursors/Hotline White Vertical Resize.cur"), ns-resize;
+}
+
+/* Diagonal 1 (NESW) */
+.resize-nesw {
+  cursor: url("/cursors/Hotline White Diagonal Resize 1.cur"), nesw-resize;
+}
+
+/* Diagonal 2 (NWSE) */
+.resize-nwse {
+  cursor: url("/cursors/Hotline White Diagonal Resize 2.cur"), nwse-resize;
+}
+
 @font-face {
   font-family: "ANAKRON";
   src: url("/fonts/ANAKRON.woff2") format("woff2");
@@ -373,7 +460,6 @@
   /* Hover Effect: Card lifts up and glows brighter */
   .timeline-box:not(.ghost):hover {
     transform: translateY(-2px);
-    border-color: var(--color-primary);
     box-shadow:
       var(--shadow-glow-primary),
       inset 0 0 20px oklch(0.7 0.28 295 / 0.1);
@@ -448,23 +534,8 @@
   }
 
   .badge-synthwave:hover {
-    transform: scale(1.1);
     background-opacity: 0.3;
     box-shadow: 0 0 15px currentColor;
-  }
-
-  /* --- NEW: ANAKRON ICONS --- */
-  /* Using the font as a glyph icon */
-  .icon-anakron {
-    font-family: "ANAKRON";
-    font-size: 1.5rem;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify_content: center;
-    width: 2rem;
-    height: 2rem;
-    /* Neon glow handled by text-shadow utilities */
   }
 }
 
@@ -484,5 +555,57 @@
   }
   50% {
     box-shadow: var(--shadow-glow-primary);
+  }
+}
+@layer utilities {
+  .flicker-in {
+    animation: flicker-in 0.5s ease-in-out;
+  }
+
+  @keyframes flicker-in {
+    0% {
+      opacity: 0;
+      text-shadow: var(--shadow-glow-accent);
+    }
+    10% {
+      opacity: 0.1;
+      text-shadow: var(--shadow-glow-primary);
+    }
+    20% {
+      opacity: 0.3;
+      text-shadow: none;
+    }
+    30% {
+      opacity: 0.1;
+      text-shadow: var(--shadow-glow-secondary);
+    }
+    40% {
+      opacity: 0.5;
+      text-shadow: var(--shadow-glow-primary);
+    }
+    50% {
+      opacity: 0.2;
+      text-shadow: var(--shadow-glow-accent);
+    }
+    60% {
+      opacity: 0.7;
+      text-shadow: none;
+    }
+    70% {
+      opacity: 0.4;
+      text-shadow: var(--shadow-glow-primary);
+    }
+    80% {
+      opacity: 0.8;
+      text-shadow: var(--shadow-glow-secondary);
+    }
+    90% {
+      opacity: 0.9;
+      text-shadow: none;
+    }
+    100% {
+      opacity: 1;
+      text-shadow: none;
+    }
   }
 }

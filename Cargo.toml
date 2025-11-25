@@ -10,6 +10,7 @@ keywords = ["trunk", "yew"]
 categories = ["gui", "wasm", "web-programming"]
 
 [dependencies]
+gloo-timers = "0.3.0"
 serde = "1.0.228"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["fmt"] }

@@ -1,4 +1,4 @@
-use crate::data::profile::PROFILE;
+use crate::data::profile_data::PROFILE;
 use yew::{function_component, html, Html};
 
 #[function_component(Navigation)]
